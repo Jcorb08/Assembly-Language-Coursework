@@ -1,0 +1,79 @@
+//Switch Case and compress character sequence
+//by 198735
+//The storage of memory address from R8 onwards is due to
+//the assembly language not being able to take labels for
+//certain JMP conditions
+// R0 - stores exit condition and if conditions
+// R1 - stores current memory address input
+// R2 - stores current input value
+// R3 - stores current memory address output
+// R4 - stores iterator for in/output
+// R5 - stores iterator for spaces
+// R6 - stores add value (32)
+// R7 - stores minus value (-32)
+// R8 - memory address of nocaps
+// R9 - memory address of space
+// RA - memory address of else
+// RB - memory address of newloop
+
+		mov 	00 -> R0	//setup
+		mov 	[input] -> R1
+		mov 	[R1] -> R2
+		mov 	[output] -> R3
+		mov 	1 -> R4	
+		mov	0 -> R5
+		mov	+32 -> R6
+		mov	-32 -> R7
+		mov	nocaps -> R8
+		mov 	space -> R9
+		mov 	else -> RA
+		mov 	newloop -> RB
+
+startloop:	jmpeq	endloop, R2	//start of while loop
+		
+caps:		mov 	+65 -> R0	//converting value to capital
+		jmplt	R8, R2
+		mov 	+90 -> R0
+		jmpgt   R8, R2		//jumps to nocaps
+		
+		addi 	R2, R6 -> R2
+		mov 	0 -> R5
+		mov 	R2 -> [R3]
+		addi	R3, R4 -> R3
+		jmp	newloop		
+
+nocaps:		mov 	+97 -> R0	//converting value to lowercase
+		jmplt	R9, R2
+		mov 	+122 -> R0
+		jmpgt   R9, R2		//jumps to space
+
+		addi 	R2, R7 -> R2
+		mov 	0 -> R5
+		mov 	R2 -> [R3]
+		addi	R3, R4 -> R3
+		jmp	newloop	
+
+space:		mov 	+32 -> R0	//checks if spaces >1
+		jmpne   RA, R2
+		addi 	R5, R4 -> R5
+		mov	1 -> R0
+		jmpne 	RB, R5		//if it is it doesn't add the space
+		mov 	R2 -> [R3]	
+		addi	R3, R4 -> R3
+		jmp 	newloop
+
+else:		mov 	0 -> R5
+		mov 	R2 -> [R3]
+		addi	R3, R4 -> R3
+		
+newloop:	mov 	00 -> R0	//resets R0 to 00 value
+		addi	R1, R4 -> R1	//increments memory address from current
+		mov 	[R1] -> R2
+		jmp	startloop	//end of while loop
+
+endloop:	halt
+	
+input:	data		10000000	//input address (80)
+output:	data		11000000	//output address (c0)
+80: data		"I got a 2 at the 14   th Yesterday"    //input strings
+

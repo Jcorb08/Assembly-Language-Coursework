@@ -1,0 +1,54 @@
+// The program goes through the string of characters
+// and checks the ascii of each character and changes
+// it accordingly or not depending on what it is. 
+// This is then added to a new string and that string is outputted.
+// https://www.javatpoint.com/java-int-to-char
+// https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html
+
+data = passed into program the thing getting changed
+iteratorSpace = 0
+iteratorNewData = 0
+newData = output for program currently null
+currentAsciiValue = 0
+i = 0
+currentAsciiValue = (int) data[i]
+
+while currentAsciiValue != 0 do		 
+
+	if currentAsciiValue >= 65 and currentAsciiValue <= 90 then
+		
+		currentAsciiValue = currentAsciiValue + 32
+		iteratorSpace = 0
+		newData[iteratorNewData] = (char) currentAsciiValue
+		iteratorNewData =  iteratorNewData + 1
+
+	else if currentAsciiValue >= 97 and currentAsciiValue <= 122 then
+		
+		currentAsciiValue = currentAsciiValue - 32
+		iteratorSpace = 0
+		newData[iteratorNewData] = (char) currentAsciiValue
+		iteratorNewData =  iteratorNewData + 1
+
+	else if currentAsciiValue == 32 then
+
+		iteratorSpace = iteratorSpace + 1
+		
+		if iteratorSpace == 1 then
+			
+			newData[iteratorNewData] = (char) currentAsciiValue
+			iteratorNewData = iteratorNewData + 1
+
+	else
+		
+		iteratorSpace = 0
+		newData[iteratorNewData] = (char) currentAsciiValue
+		iteratorNewData =  iteratorNewData + 1
+
+	endif
+
+	i = i + 1
+	currentAsciiValue = (int) data[i]
+endfor	
+
+newData[iteratorNewData] = 0
+			
